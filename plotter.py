@@ -24,18 +24,33 @@ for file in data_files:
     for county in data:
         fips = county["fips"]
         level = county["communityLevels"]["cdcCommunityLevel"]
-        if level == 0:
-            color = "#51EF80"
-        elif level == 1:
-            color = "#FCFC44"
-        elif level == 2:
-            color = "#EF8051"
-        elif level == 3:
-            color = "#EF2D2D"
-        map_df.loc[map_df["FIPS"] == fips, "LEVEL"] = color
+        if level != None:
+            if level == 0:
+                color = "#30FF4B"
+            elif level == 1:
+                color = "#FFF130"
+            elif level == 2:
+                color = "#FF3030"
+            map_df.loc[map_df["FIPS"] == fips, "LEVEL"] = color
     
     counties = map_df.loc[map_df["TIME_ZONE"].isin(valid_time_zones)]
-    ax = counties.plot("geometry", color=counties["LEVEL"], edgecolor="#565656", linewidth=0.25)
+    ax = counties.plot(color=counties["LEVEL"], edgecolor="#565656", linewidth=0.25)
     ax.set_axis_off()
     ax.figure.savefig(f"{file.split('.')[0]}.png")
+
     
+# for file in data_files:
+    
+#     max_level = 0
+    
+#     with open(file, 'rb') as f:
+#         data = pickle.load(f)
+    
+#     for county in data:
+#         fips = county["fips"]
+#         level = county["communityLevels"]["cdcCommunityLevel"]
+#         if level and level > max_level:
+#             max_level = level
+
+# print(max_level)
+        
